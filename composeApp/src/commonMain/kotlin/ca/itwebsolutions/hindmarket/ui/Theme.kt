@@ -8,11 +8,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import ca.itwebsolutions.hindmarket.model.FontScalePreset
 
-val SaffronPrimary = Color(0xFFD84315)
-val EmeraldSecondary = Color(0xFF1B5E20)
-val WarmBackground = Color(0xFFF7F5F0)
-val CardSurface = Color(0xFFFFFFFF)
-val DarkInk = Color(0xFF1A1A1A)
+// Minimal Modern Palette
+val TerracottaPrimary = Color(0xFFC2410C)
+val TerracottaSoft = Color(0xFFFFF7ED)
+val ForestVerified = Color(0xFF065F46)
+val ForestSoft = Color(0xFFECFDF5)
+val CanvasBackground = Color(0xFFF8F9FA)
+val SurfaceWhite = Color(0xFFFFFFFF)
+val HairlineBorder = Color(0xFFE5E7EB)
+val InkPrimary = Color(0xFF111827)
+val InkSecondary = Color(0xFF4B5563)
 
 @Composable
 fun HindMarketTheme(
@@ -21,23 +26,52 @@ fun HindMarketTheme(
 ) {
     val m = fontScale.multiplier
     val typography = Typography(
-        headlineMedium = TextStyle(fontSize = (24 * m).sp, fontWeight = FontWeight.Bold, color = DarkInk),
-        titleLarge = TextStyle(fontSize = (20 * m).sp, fontWeight = FontWeight.Bold, color = DarkInk),
-        titleMedium = TextStyle(fontSize = (18 * m).sp, fontWeight = FontWeight.SemiBold, color = DarkInk),
-        bodyLarge = TextStyle(fontSize = (17 * m).sp, lineHeight = (24 * m).sp, color = DarkInk),
-        bodyMedium = TextStyle(fontSize = (15 * m).sp, lineHeight = (21 * m).sp, color = Color(0xFF333333)),
-        labelLarge = TextStyle(fontSize = (17 * m).sp, fontWeight = FontWeight.Bold)
+        headlineMedium = TextStyle(
+            fontSize = (24 * m).sp,
+            lineHeight = (32 * m).sp,
+            fontWeight = FontWeight.Bold,
+            letterSpacing = (-0.5).sp,
+            color = InkPrimary
+        ),
+        titleLarge = TextStyle(
+            fontSize = (19 * m).sp,
+            lineHeight = (26 * m).sp,
+            fontWeight = FontWeight.Bold,
+            color = InkPrimary
+        ),
+        titleMedium = TextStyle(
+            fontSize = (17 * m).sp,
+            lineHeight = (24 * m).sp,
+            fontWeight = FontWeight.SemiBold,
+            color = InkPrimary
+        ),
+        bodyLarge = TextStyle(
+            fontSize = (16 * m).sp,
+            lineHeight = (24 * m).sp,
+            color = InkPrimary
+        ),
+        bodyMedium = TextStyle(
+            fontSize = (14 * m).sp,
+            lineHeight = (20 * m).sp,
+            color = InkSecondary
+        ),
+        labelLarge = TextStyle(
+            fontSize = (16 * m).sp,
+            fontWeight = FontWeight.SemiBold
+        )
     )
 
     val colors = lightColorScheme(
-        primary = SaffronPrimary,
-        secondary = EmeraldSecondary,
-        background = WarmBackground,
-        surface = CardSurface,
+        primary = TerracottaPrimary,
+        secondary = ForestVerified,
+        background = CanvasBackground,
+        surface = SurfaceWhite,
+        surfaceVariant = Color(0xFFF3F4F6),
+        outline = HairlineBorder,
         onPrimary = Color.White,
         onSecondary = Color.White,
-        onBackground = DarkInk,
-        onSurface = DarkInk
+        onBackground = InkPrimary,
+        onSurface = InkPrimary
     )
 
     MaterialTheme(colorScheme = colors, typography = typography, content = content)
