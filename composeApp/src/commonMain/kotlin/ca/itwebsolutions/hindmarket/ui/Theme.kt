@@ -76,3 +76,7 @@ fun HindMarketTheme(
 
     MaterialTheme(colorScheme = colors, typography = typography, content = content)
 }
+// Backward-compatible aliases for Detail, Search & AddBusiness screens
+val SaffronPrimary = TerracottaPrimary
+val EmeraldSecondary = ForestVerified
+val WarmBackground = CanvasBackground
