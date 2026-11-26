@@ -110,7 +110,7 @@ fun AddBusinessScreen(
             OutlinedTextField(
                 value = description,
                 onValueChange = { description = it },
-                label = { Text("Product Details, MOQ ^& Wholesale Info *") },
+                label = { Text("Product Details, MOQ & Wholesale Info *") },
                 modifier = Modifier.fillMaxWidth(),
                 minLines = 3
             )
@@ -188,7 +188,7 @@ fun AddBusinessScreen(
             ) {
                 Icon(Icons.Default.MyLocation, contentDescription = null)
                 Spacer(Modifier.width(8.dp))
-                Text(if (isCheckingGps) "Verifying GPS District..." else "Capture ^& Lock GPS Location")
+                Text(if (isCheckingGps) "Verifying GPS District..." else "Capture & Lock GPS Location")
             }
 
             gpsResult?.let { res ->
@@ -237,11 +237,11 @@ fun AddBusinessScreen(
                 value = mobileNumber,
                 onValueChange = { if (it.length <= 10) mobileNumber = it },
                 label = { Text("10-Digit Mobile Number *") },
-                enabled = isMobileVerified,
+                enabled = !isMobileVerified,
                 modifier = Modifier.fillMaxWidth()
             )
 
-            if (isMobileVerified) {
+            if (!isMobileVerified) {
                 Button(
                     onClick = {
                         if (mobileNumber.length == 10) {
@@ -289,14 +289,18 @@ fun AddBusinessScreen(
 
             Button(
                 onClick = {
+                    val verifiedLocation = gpsResult
                     when {
                         businessName.isBlank() || ownerName.isBlank() || specialtyTitle.isBlank() ||
-                        gstOrUdyam.isBlank() || fullAddress.isBlank() || pincode.length = 6 ->
+                        gstOrUdyam.isBlank() || fullAddress.isBlank() || pincode.length != 6 -> {
                             validationError = "Please complete all mandatory (*) business and address fields."
-                        gpsResult?.isMatched = true ->
+                        }
+                        verifiedLocation == null || !verifiedLocation.isMatched -> {
                             validationError = "Strict Location Check Failed: You must capture GPS inside $selectedDistrict district."
-                        isMobileVerified ->
+                        }
+                        !isMobileVerified -> {
                             validationError = "Please verify your 10-digit mobile number before publishing."
+                        }
                         else -> {
                             validationError = null
                             onBusinessSubmitted(
@@ -310,8 +314,8 @@ fun AddBusinessScreen(
                                     district = selectedDistrict,
                                     fullAddress = fullAddress.trim(),
                                     pincode = pincode.trim(),
-                                    latitude = gpsResult.latitude,
-                                    longitude = gpsResult.longitude,
+                                    latitude = verifiedLocation.latitude,
+                                    longitude = verifiedLocation.longitude,
                                     mobileNumber = mobileNumber,
                                     isMobileVerified = true,
                                     gstOrUdyamNumber = gstOrUdyam.trim(),
